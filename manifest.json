@@ -1,0 +1,25 @@
+/**
+ * Created by Nathalie Rud on 24-Sep-16.
+ */
+
+{
+  "manifest_version": 2,
+  "name": "copy-tasks-ext",
+  "description": "Copies tasks titles from selected list in Trello",
+  "version": "0.0.1",
+  "content_scripts": [
+    {
+      "css": [ "copy-trello-tasks.css" ],
+      "js": [ "copy-trello-tasks.js"],
+      "matches": [ "*://trello.com/b/*" ],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "permissions" : [
+    "notifications"
+  ]
+}
