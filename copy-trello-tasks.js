@@ -6,7 +6,6 @@
   var newScript = document.createElement('script');
   newScript.type = 'text/javascript';
   newScript.src = 'https://use.fontawesome.com/5ea3d84a35.js';
-
   document.body.appendChild(newScript);
 
   init();
@@ -30,7 +29,6 @@
 
   function addCopyButton() {
     var lists = document.getElementsByClassName('js-list list-wrapper');
-
     for(var i = 0; i < lists.length; i++) {
       var listElement = lists[i];
       listElement.id = 'js-list-' + i;
@@ -47,17 +45,23 @@
   }
 
   function copyTasksTitles(e) {
-    var listWrapper = getClosestClassElement(e.target, 'list-wrapper');
-    var tasks = listWrapper.getElementsByClassName('list-card-title js-card-name');
-    var res = '';
-    var count = 0;
-    for(var i = 0; i < tasks.length; i++) {
-      var taskElement = tasks[i];
-      res += taskElement.innerText + '\r\n';
-      count += 1;
+    try {
+      var listWrapper = getClosestClassElement(e.target, 'list-wrapper');
+      var tasks = listWrapper.getElementsByClassName('list-card-title js-card-name');
+      var res = '';
+      var count = 0;
+      for (var i = 0; i < tasks.length; i++) {
+        var taskElement = tasks[i];
+        res += taskElement.innerText + '\r\n';
+        count += 1;
+      }
+      copyToClipboard(res);
+      showBasicNotification('Trello copy list', count + ' task(s) copied to clipboard',
+      chrome.runtime.getURL('icons/edit-copy.svg'))
     }
-    copyToClipboard(res);
-    showBasicNotification('Trello copy list', count + ' task(s) copied to clipboard')
+    catch(e){
+      alert('Trello list was NOT copied!\nError occured: ' + e.message)
+    }
   }
 
   function getClosestClassElement(element, className) {
@@ -80,12 +84,12 @@
     document.body.removeChild(dummy);
   }
 
-  function showBasicNotification(title, msg) {
+  function showBasicNotification(title, msg, img) {
     var opt = {
       type: 'basic',
       title: title,
       message: msg,
-      iconUrl: 'src\\icons\\temp.png'
+      iconUrl: img
     };
     chrome.runtime.sendMessage(opt);
   }
