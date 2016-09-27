@@ -16,7 +16,7 @@
     {
       "css": [ "copy-trello-tasks.css" ],
       "js": [ "copy-trello-tasks.js"],
-      "matches": [ "*://trello.com/b/*" ],
+      "matches": [ "*://trello.com/*" ],
       "run_at": "document_end"
     }
   ],
