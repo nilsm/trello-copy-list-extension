@@ -14,4 +14,5 @@
 
 .js-list-copy-btn:hover {
   color: #4d4d4d;
+  cursor: pointer;
 }
