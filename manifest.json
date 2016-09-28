@@ -1,12 +1,8 @@
-/**
- * Created by Nathalie Rud on 24-Sep-16.
- */
-
 {
   "manifest_version": 2,
-  "name": "copy-tasks-ext",
+  "name": "Copy Trello Lists",
   "description": "Copies card titles from selected list in Trello",
-  "version": "1.0",
+  "version": "1.01",
   "icons": {
     "16": "icons/edit-copy16.png",
     "48": "icons/edit-copy48.png",
