@@ -1,5 +1,6 @@
 # trello-copy-list-extension
 Chrome browser extension to copy trello lists to clipboard
+
 See it in action: https://www.youtube.com/watch?v=ibDrGLYeX4k
 
 ## How to package
