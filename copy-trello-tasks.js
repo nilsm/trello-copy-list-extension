@@ -1,5 +1,6 @@
 /**
  * Created by Nathalie Rud on 24-Sep-16.
+ * Updated by Nils Millahn on 8-Feb-19.
  */
 
 (function(){
@@ -11,12 +12,22 @@
   init();
 
   function init() {
+
+    // the first 5 Trello lists are added straight away
+    // any remaining lists are added later on by Javascript
+    // we need to add buttons to both types
+    // it seems they all come together one by one, followed by a bunch of other elements
     var ob = new MutationObserver(function(records){
       for (var i = 0; i < records.length; i++) {
         var record = records[i];
-        if(record.target.id === 'content') {
-          addCopyButton();
-          break;
+        if (record.addedNodes) {
+          for (var j = 0; j < record.addedNodes.length; j++) {
+            var node = record.addedNodes[j];
+            if (node.className && node.className == 'boards-drawer') {
+              addCopyButton();
+              break;
+            }
+          }
         }
       }
     });
