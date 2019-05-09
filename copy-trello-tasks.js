@@ -67,8 +67,11 @@
         count += 1;
       }
       copyToClipboard(res);
-      showBasicNotification('Trello copy list', count + ' task(s) copied to clipboard',
-      chrome.runtime.getURL('icons/edit-copy.svg'))
+      showBasicNotification(
+        'Trello copy list',
+        count + ' task(s) copied to clipboard',
+        chrome.runtime.getURL('icons/edit-copy.svg')
+      );
     }
     catch(e){
       alert('Trello list was NOT copied!\nError occured: ' + e.message)
@@ -86,10 +89,10 @@
   function copyToClipboard(text){
     var dummy = document.createElement('textarea');
     dummy.setAttribute('id', 'dummy_id');
-    dummy.setAttribute('class', 'hidden');
+    dummy.setAttribute('style', 'position:absolute;top:-100px');
     document.body.appendChild(dummy);
     if (text == '') text =' ';
-    document.getElementById('dummy_id').value = text;
+    dummy.value = text;
     dummy.select();
     document.execCommand('copy');
     document.body.removeChild(dummy);
