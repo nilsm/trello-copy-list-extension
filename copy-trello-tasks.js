@@ -13,6 +13,9 @@
 
   function init() {
 
+    var listClass = 'js-list list-wrapper';
+    var updateTimeout;
+
     // the first 5 Trello lists are added straight away
     // any remaining lists are added later on by Javascript
     // we need to add buttons to both types
@@ -23,8 +26,13 @@
         if (record.addedNodes) {
           for (var j = 0; j < record.addedNodes.length; j++) {
             var node = record.addedNodes[j];
-            if (node.className && node.className == 'boards-drawer') {
-              addCopyButton();
+            if (node.className && node.className == listClass) {
+
+              // use a timeout so we only run addCopyButtons once all Trello cards have been added
+              if (updateTimeout) {
+                clearTimeout(updateTimeout);
+              }
+              updateTimeout = setTimeout(addCopyButtons, 200);
               break;
             }
           }
@@ -38,18 +46,19 @@
     });
   }
 
-  function addCopyButton() {
-    var lists = document.getElementsByClassName('js-list list-wrapper');
-    for(var i = 0; i < lists.length; i++) {
-      var listElement = lists[i];
-      listElement.id = 'js-list-' + i;
-      var buttonWrapperElement = listElement.getElementsByClassName('js-list-header')[0];
-
-      if (buttonWrapperElement) {
+  function addCopyButtons() {
+    var listHeaders = document.getElementsByClassName('js-list-header');
+    var buttonClass = 'js-list-copy-btn';
+    var element;
+    for (var i = 0, len = listHeaders.length; i < len; i++) {
+      element = listHeaders[i];
+      // only add a copy button if there isn't one there already
+      var buttons = element.getElementsByClassName(buttonClass);
+      if (buttons.length == 0) {
         var buttonElement = document.createElement('a');
-        buttonElement.className = 'js-list-copy-btn';
-        buttonElement.innerHTML = '<i class="fa fa-clipboard" aria-hidden="true"></i>';
-        buttonWrapperElement.appendChild(buttonElement);
+        buttonElement.className = buttonClass;
+        buttonElement.innerHTML = '<i class="fa fa-clipboard" aria-hidden="true"></i>';        
+        element.appendChild(buttonElement);
         buttonElement.addEventListener('click', copyTasksTitles);
       }
     }
